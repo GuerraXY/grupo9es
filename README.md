@@ -13,5 +13,5 @@ Complemento 3 - Não conseguimos fazer com que o ficheiro bash mostrasse o resul
 
 Complemento 4 - Está com todas as funcionalidades pedidas, não apresenta nenhum erro. O projeto Java foi colocado com o nome "maven-ES".
 
-Complemento 5 - Os operadores lógicos "and" e "or" estavam a dar demasiados problemas e, como tal, foram ignorados. A instrução "literals(Strings, Integers)" não foi bem compreendida. Se essa instrução significa "usar strings e/ou integers para alterar a informação que é apresentada" então está implementada. Caso contrário não está.
-
+Complemento 5 - Os operadores lógicos "and" e "or" estavam a dar demasiados problemas e, como tal, foram ignorados. A instrução "literals(Strings, Integers)" não foi bem compreendida. Se essa instrução significa "usar strings e/ou integers para alterar a informação que é apresentada" então está implementada. Caso contrário não está. O projeto Java foi colocado com o nome "ESII-Complemento5".
+ 
