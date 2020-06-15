@@ -1,0 +1,614 @@
+<html>
+<head>
+<title>Projeto ES</title>
+</head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<body>
+	<div>
+		<select id="regiao" name="regioes" onchange="filterByRegiao()">
+
+			<option value="vazio">Todas</option>
+			<option value="alentejo">Alentejo</option>
+			<option value="centro">Centro</option>
+			<option value="lisboa">Lisboa</option>
+			<option value="algarve">Algarve</option>
+			<option value="norte">Norte</option>
+		</select>
+	</div>
+	<br>
+
+	<div>
+		<label>Nº de Infeções: </label> <select id="comparacao"
+			name="comparacao">
+			<option value="igual">igual a</option>
+			<option value="diferente">diferente de</option>
+			<option value="maior">maior que</option>
+			<option value="menor">menor que</option>
+			<option value="igualsup">igual ou superior a</option>
+			<option value="igualinf">igual ou inferior a</option>
+		</select> <input id="valorInf" type="number" min="0">
+	</div>
+	<br>
+
+	<div>
+		<label>Nº de Internamentos: </label> <select id="comparacao2"
+			name="comparacao">
+			<option value="igual">igual a</option>
+			<option value="diferente">diferente de</option>
+			<option value="maior">maior que</option>
+			<option value="menor">menor que</option>
+			<option value="igualsup">igual ou superior a</option>
+			<option value="igualinf">igual ou inferior a</option>
+		</select> <input id="valorInter" type="number" min="0">
+	</div>
+	<br>
+
+	<div>
+		<label>Nº de Testes: </label> <select id="comparacao3"
+			name="comparacao">
+			<option value="igual">igual a</option>
+			<option value="diferente">diferente de</option>
+			<option value="maior">maior que</option>
+			<option value="menor">menor que</option>
+			<option value="igualsup">igual ou superior a</option>
+			<option value="igualinf">igual ou inferior a</option>
+		</select> <input id="valorTestes" type="number" min="0">
+	</div>
+	<br>
+	<label> Inverter?</label>
+	<input id="operador3" type="checkbox">
+	<input id="applyFilter" type="button" value="Aplicar Filtros"
+		onclick="aplicarFiltros()">
+	<input id="clearFilter" type="button" value="Apagar Filtros"
+		onclick="clearFilters()">
+
+	<table border="1" bordercolor="#000000" id="tabela">
+		<tr>
+			<td><b>Região</b></td>
+			<td><b>Infeções</b></td>
+			<td><b>Internamentos</b></td>
+			<td><b>Testes</b></td>
+		</tr><tr><td>Alentejo</td><td>50</td><td>50</td><td>50</td></tr>
+<tr><td>Centro</td><td>0</td><td>50</td><td>50</td></tr>
+<tr><td>Lisboa</td><td>0</td><td>50</td><td>50</td></tr>
+<tr><td>Algarve</td><td>50</td><td>50</td><td>50</td></tr>
+<tr><td>Norte</td><td>0</td><td>50</td><td>50</td></tr>
+</table><div>
+
+		<label>Calcular o total de:</label> <select id="criterios">
+			<option value="inf">Nº de Infeções</option>
+			<option value="inter">Nº de Internamentos</option>
+			<option value="testes">Nº de Testes</option>
+		</select>
+
+		<div>
+			<label>Alentejo</label><input id="alentejo" type="checkbox"> <label>Centro</label><input
+				id="centro" type="checkbox"> <label>Lisboa</label><input
+				id="lisboa" type="checkbox"> <label>Algarve</label><input
+				id="algarve" type="checkbox"> <label>Norte</label><input
+				id="norte" type="checkbox"> <br> <input type="button"
+				value="Calcular" onclick="calcularTotal()">
+		</div>
+		Total:<input type="number" id="total" disabled>
+	</div>
+
+
+
+
+	<script>
+		var trDisplay = new Array();
+		var trDisplayInf = new Array();
+		var trDisplayInter = new Array();
+		var trDisplayTestes = new Array();
+
+		function filterByRegiao() {
+			// Declare variables
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("regiao");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tabela");
+			tr = table.getElementsByTagName("tr");
+			trDisplay = new Array();
+			console.log("-------------------------------------------");
+
+			// Loop through all table rows, and hide those who don't match the search query
+			for (i = 1; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+
+					txtValue = td.textContent || td.innerText;
+
+					if (filter === "VAZIO" || filter == txtValue.toUpperCase()) {
+						console
+								.log(
+										tr[i].getElementsByTagName("td")[0].textContent,
+										"válido na região");
+						//filterByInfecao(filter);
+
+					} else {
+						if (!trDisplay.includes(tr[i])) {
+							trDisplay.push(tr[i]);
+						}
+					}
+
+				}
+			}
+			for (var i = 1; i < tr.length; i++) {
+				if (!trDisplay.includes(tr[i])) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+		function filterByInfecao() {
+			var input, filter, regiaoFilter, table, tr, td, i, txtValue;
+			input = document.getElementById("valorInf");
+			regiaoFilter = document.getElementById("regiao").value
+					.toUpperCase();
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tabela");
+			tr = table.getElementsByTagName("tr");
+
+			for (i = 1; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				td0 = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+
+					txtValue = td.innerText;
+					if (regiaoFilter === "VAZIO") {
+						if (document.getElementById("comparacao").value == "igual") {
+							if ((txtValue - filter == 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInf.includes(tr[i])) {
+									trDisplayInf.splice(trDisplayInf
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInf.includes(tr[i])) {
+									trDisplayInf.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao").value == "diferente") {
+							if ((txtValue - filter != 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInf.includes(tr[i])) {
+									trDisplayInf.splice(trDisplayInf
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInf.includes(tr[i])) {
+									trDisplayInf.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao").value == "maior") {
+							if ((txtValue - filter > 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInf.includes(tr[i])) {
+									trDisplayInf.splice(trDisplayInf
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInf.includes(tr[i])) {
+									trDisplayInf.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao").value == "menor") {
+							if ((txtValue - filter < 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInf.includes(tr[i])) {
+									trDisplayInf.splice(trDisplayInf
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInf.includes(tr[i])) {
+									trDisplayInf.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao").value == "igualsup") {
+							if ((txtValue - filter >= 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInf.includes(tr[i])) {
+									trDisplayInf.splice(trDisplayInf
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInf.includes(tr[i])) {
+									trDisplayInf.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao").value == "igualinf") {
+							if ((txtValue - filter <= 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInf.includes(tr[i])) {
+									trDisplayInf.splice(trDisplayInf
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInf.includes(tr[i])) {
+									trDisplayInf.push(tr[i]);
+								}
+							}
+						}
+
+					}
+				}
+
+			}
+			console.log(trDisplayInf);
+			loadTableItems();
+		}
+		function filterByInter() {
+			var input, filter, table, regiaoFilter, tr, td, i, txtValue;
+			input = document.getElementById("valorInter");
+			regiaoFilter = document.getElementById("regiao").value
+					.toUpperCase();
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tabela");
+			tr = table.getElementsByTagName("tr");
+
+			for (i = 1; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[2];
+				td0 = tr[i].getElementsByTagName("td")[0];
+				td1 = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+
+					txtValue = td.textContent || td.innerText;
+
+					if (regiaoFilter === "VAZIO") {
+						if (document.getElementById("comparacao2").value == "igual") {
+							if ((txtValue - filter == 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInter.includes(tr[i])) {
+									trDisplayInter.splice(trDisplayInter
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInter.includes(tr[i])) {
+									trDisplayInter.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao2").value == "diferente") {
+							if ((txtValue - filter != 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInter.includes(tr[i])) {
+									trDisplayInter.splice(trDisplayInter
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInter.includes(tr[i])) {
+									trDisplayInter.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao2").value == "maior") {
+							if ((txtValue - filter > 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInter.includes(tr[i])) {
+									trDisplayInter.splice(trDisplayInter
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInter.includes(tr[i])) {
+									trDisplayInter.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao2").value == "menor") {
+							if ((txtValue - filter < 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInter.includes(tr[i])) {
+									trDisplayInter.splice(trDisplayInter
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInter.includes(tr[i])) {
+									trDisplayInter.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao2").value == "igualsup") {
+							if ((txtValue - filter >= 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInter.includes(tr[i])) {
+									trDisplayInter.splice(trDisplayInter
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInter.includes(tr[i])) {
+									trDisplayInter.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao2").value == "igualinf") {
+							if ((txtValue - filter <= 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na infecao");
+								if (trDisplayInter.includes(tr[i])) {
+									trDisplayInter.splice(trDisplayInter
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayInter.includes(tr[i])) {
+									trDisplayInter.push(tr[i]);
+								}
+							}
+						}
+					}
+				}
+
+			}
+			loadTableItems();
+		}
+		function filterByTestes() {
+			var input, filter, table, regiaoFilter, tr, td, i, txtValue;
+			input = document.getElementById("valorTestes");
+			regiaoFilter = document.getElementById("regiao").value
+					.toUpperCase();
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tabela");
+			tr = table.getElementsByTagName("tr");
+
+			for (i = 1; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[3];
+				td0 = tr[i].getElementsByTagName("td")[0];
+				td1 = tr[i].getElementsByTagName("td")[1];
+				td2 = tr[i].getElementsByTagName("td")[2];
+
+				if (td) {
+
+					txtValue = td.textContent || td.innerText;
+
+					if (regiaoFilter === "VAZIO") {
+						if (document.getElementById("comparacao3").value == "igual") {
+							if ((txtValue - filter == 0) || filter == "") {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na teste");
+								if (trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.splice(trDisplayTestes
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao3").value == "diferente") {
+							if ((txtValue - filter != 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na teste");
+								if (trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.splice(trDisplayTestes
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao3").value == "maior") {
+							if ((txtValue - filter > 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na teste");
+								if (trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.splice(trDisplayTestes
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao3").value == "menor") {
+							if ((txtValue - filter < 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na teste");
+								if (trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.splice(trDisplayTestes
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao3").value == "igualsup") {
+							if ((txtValue - filter >= 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na teste");
+								if (trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.splice(trDisplayTestes
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.push(tr[i]);
+								}
+							}
+						} else if (document.getElementById("comparacao3").value == "igualinf") {
+							if ((txtValue - filter <= 0 || filter == "")) {
+								console
+										.log(
+												tr[i]
+														.getElementsByTagName("td")[0].textContent,
+												"válido na teste");
+								if (trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.splice(trDisplayTestes
+											.indexOf(tr[i]), 1);
+								}
+
+							} else {
+								if (!trDisplayTestes.includes(tr[i])) {
+									trDisplayTestes.push(tr[i]);
+								}
+							}
+						}
+					}
+				}
+				//TODO
+				/*
+				fazer ifs para cada caso de operadores
+				
+				 */
+
+			}
+			loadTableItems();
+		}
+
+		function clearFilters() {
+			var regiaoFilter, infecaoFilter, interFilter, testeFilter, table, tr;
+			table = document.getElementById("tabela");
+			tr = table.getElementsByTagName("tr");
+			document.getElementById("regiao").selectedIndex = "0";
+			document.getElementById("valorInf").value = "";
+			document.getElementById("valorInter").value = "";
+			document.getElementById("valorTestes").value = "";
+			trDisplay = new Array();
+			for (var i = 1; i < tr.length; i++) {
+				if (!trDisplay.includes(tr[i])) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+
+		function loadTableItems() {
+			tr = document.getElementById("tabela").getElementsByTagName("tr");
+			for (var i = 1; i < tr.length; i++) {
+
+				if (!trDisplayInf.includes(tr[i])
+						&& !trDisplayInter.includes(tr[i])
+						&& !trDisplayTestes.includes(tr[i])) {
+					if (!document.getElementById("operador3").checked) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				} else {
+					if (!document.getElementById("operador3").checked) {
+						tr[i].style.display = "none";
+					} else {
+						tr[i].style.display = "";
+					}
+				}
+			}
+		}
+		function aplicarFiltros() {
+			filterByInfecao();
+			filterByInter();
+			filterByTestes();
+		}
+		
+		function calcularTotal(){
+			var total, nome;
+			total = 0;
+			tr = document.getElementById("tabela").getElementsByTagName("tr");
+			
+			if(document.getElementById("criterios").value == "inf"){
+				for (var i = 1; i < tr.length; i++) {
+					nome = tr[i].getElementsByTagName("td")[0].textContent;
+ 					if(document.getElementById(nome.toLowerCase()).checked == true){
+ 						console.log("entrei");
+ 						total = total + parseInt(tr[i].getElementsByTagName("td")[1].textContent);
+ 					}
+ 					
+				}
+			} else if (document.getElementById("criterios").value == "inter"){
+				for (var i = 1; i < tr.length; i++) {
+					nome = tr[i].getElementsByTagName("td")[0].textContent;
+ 					if(document.getElementById(nome.toLowerCase()).checked == true){
+ 						console.log("entrei");
+ 						total = total + parseInt(tr[i].getElementsByTagName("td")[2].textContent);
+ 					}
+				}
+			}else{
+				for (var i = 1; i < tr.length; i++) {
+					nome = tr[i].getElementsByTagName("td")[0].textContent;
+ 					if(document.getElementById(nome.toLowerCase()).checked == true){
+ 						console.log("entrei");
+ 						total = total + parseInt(tr[i].getElementsByTagName("td")[3].textContent);
+ 					}
+				}
+			}
+			document.getElementById("total").value = total;
+		}
+	</script>
+</body>
+</html>
+

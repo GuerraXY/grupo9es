@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Região/ões</title>
+</head>
+<body>
+	<h1>Critérios</h1>
+
+	<p>Selecione os critérios que pretende utilizar</p>
+	<form>
+		<input type="checkbox" id="criterio1" name="criterio1"
+			value="infecoes"> <label for="infecoes">Infeções</label><br>
+		<input type="checkbox" id="criterio2" name="criterio2"
+			value="internamentos"> <label for="internamentos">Internamentos</label><br>
+		<input type="checkbox" id="criterio3" name="criterio3" value="testes">
+		<label for="testes">Testes</label> <br>
+		<br> <input type="submit" value="confirmar">
+	</form>
+
+</body>
+<script type="text/javascript">
+	window.onload = function()
+	{
+		function getUrlParameter(Parameter) {
+			var FullURL = window.location.search.substring(1);
+			var ParametersArray = FullURL.split('&');
+			for (var i = 0; i < ParametersArray.length; i++) {
+				var CurrentParameter = ParamenterArray[i].split('=');
+				if (CurrentParameter[0] == Parameter) {
+					return CurrentParameter[1];
+				}
+			}
+		}
+		
+	}
+</script>
+</html>
