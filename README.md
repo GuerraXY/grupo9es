@@ -17,5 +17,12 @@ Complemento 4 - Está com todas as funcionalidades pedidas, não apresenta nenhu
 
 Complemento 5 - Os operadores lógicos "and" e "or" estavam a dar demasiados problemas e, como tal, foram ignorados. A instrução "literals(Strings, Integers)" não foi bem compreendida. Se essa instrução significa "usar strings e/ou integers para alterar a informação que é apresentada" então está implementada. Caso contrário não está. O projeto Java foi colocado com o nome "ESII-Complemento5".
 
-Instruções - Na pen encontra-se o dockerfile necessário para fazer pull da nossa imagem e do MySQL, necessário para a nossa imagem funcionar, para usar este dockerfile tem de se ir ao terminal do Docker e na pasta onde quer fazer o pull da imagem coloque o dockerfile da pen e escreva no terminal "Docker-compose up -d", depois necessita de ir à pasta onde fez o pull da imagem e substituir os ficheiros pelos que se encontram na pen.
+Instruções - 
+1º - Instalar o docker, por exemplo seguindo os passos aqui https://docs.docker.com/toolbox/toolbox_install_windows/
+2º - Colocar o docker-compose.yml(encontrado na pen) na pasta onde deseja ter a nossa imagem. 
+3º - Abrir o Docker Quickstart Terminal
+4º - Colocar o comando "cd (pasta onde deseja fazer pull da nossa imagem)"
+4º - Colocar o comando "Docker-compose up -d"
+5º - Depois vá até à pasta onde agora tem a imagem e copie os ficheiros dentro da pasta "wordpress-with-java"(na pen) para a pasta onde tem a imagem, se pedir para substituir os ficheiros selecione que Sim.
+6º - Para aceder ao site wordpress apenas tem de abrir o browser e colocar o URL http://localhost ou, caso não funcione, http://192.168.99.100/ 
  
