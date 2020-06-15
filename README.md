@@ -11,4 +11,5 @@ César Couchinho - nº82579
 
 
 Complemento 4 - Está com todas as funcionalidades pedidas, não apresenta nenhum erro.
+
 Complemento 3 - Não conseguimos fazer com que o ficheiro bash mostrasse o resultado pretendido no wordpress, Tudo o resto foi implementado com sucesso.
