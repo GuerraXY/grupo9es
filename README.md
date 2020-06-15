@@ -9,6 +9,8 @@ Bernardo Moreira - nº82906
 Marcelo Monteiro - nº74292
 César Couchinho - nº82579
 
+complemento 1- o wordpress está a funcionar, com todos os menús a abrirem, mas o menú FAQ não está a apresentar nada pois o plugin que usei está a crashar a página.
+
 Complemento 3 - Não conseguimos fazer com que o ficheiro bash mostrasse o resultado pretendido no wordpress, Tudo o resto foi implementado com sucesso. O projeto Java encontra-se na pasta "Complemento 3".
 
 Complemento 4 - Está com todas as funcionalidades pedidas, não apresenta nenhum erro. O projeto Java foi colocado com o nome "maven-ES".
